@@ -14,7 +14,8 @@ use InvalidArgumentException;
 
 abstract class Model
 {
-    use ForwardCall, ModelAttributes;
+    use ForwardCall;
+    use ModelAttributes;
     /**
      * The connection resolver instance.
      *
