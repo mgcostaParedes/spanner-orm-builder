@@ -3,6 +3,11 @@ language: php
 php:
   - 7.3
 
-install: make install
+services:
+  - docker
 
-script: make test
+install:
+  - composer install
+
+script:
+  - php vendor/bin/codecept run --coverage --coverage-text
