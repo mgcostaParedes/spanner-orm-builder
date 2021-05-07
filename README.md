@@ -45,15 +45,21 @@ class User extends Model {}
 
 $users = User::where('age', '>', 30)->get();
 
+$id = 1;
+$user = User::find($id);
+
 ```
 
-**Saving a model **
+**Saving a model**
 
 ```PHP
 use MgCosta\Spanner\Model\Model;
 
 class User extends Model {
+
     protected $primaryKey = 'UserId';
+    
+    protected $keyStrategy = 'uuid4';
     
     public $name;
     public $age;
@@ -69,3 +75,12 @@ $user->save();
 ```
 
 The implementation of the query builder is inspired on Laravel Query Builder, to get more documentation follow the [link](https://laravel.com/docs/master/queries).
+
+## Credits
+
+- [Miguel Costa][https://github.com/mgcostaParedes]
+- [All Contributors][link-contributors]
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
