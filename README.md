@@ -1,6 +1,6 @@
 ## Spanner ORM Builder
 
-[![Build Status](https://api.travis-ci.com/mgcostaParedes/spanner-orm-builder.svg)](https://travis-ci.com/mgcostaParedes/spanner-orm-builder)
+[![Build Status](https://travis-ci.com/mgcostaParedes/spanner-orm-builder.svg?branch=main)](https://travis-ci.com/mgcostaParedes/spanner-orm-builder)
 [![codecov](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder/branch/main/graph/badge.svg?token=OEUY7ZDTOP)](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder)
 
 The Spanner ORM Builder is a database toolkit to PHP, providing an expressive query builder, ActiveRecord style ORM, it can serve as a database layer for your PHP app if you intend to work with **Google Cloud Spanner**.
