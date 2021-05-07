@@ -15,4 +15,7 @@ before_script:
   - composer install
 
 script:
-  - php vendor/bin/codecept run --coverage --coverage-text
+  - php vendor/bin/codecept run --coverage --coverage-text --coverage-xml
+
+after_script:
+  - bash <(curl -s https://codecov.io/bash)
