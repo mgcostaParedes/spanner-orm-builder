@@ -628,6 +628,28 @@ class Builder implements Operator, Aggregator, Fetchable
         return $this->where($this->model->getPrimaryKey() ?? 'id', '=', $id)->first($columns);
     }
 
+    public function update(array $values): Timestamp
+    {
+        $valuesWithParams = [];
+        foreach ($values as $key => $value) {
+            $parameter = $this->getValueKey();
+            $valuesWithParams[$key] = [
+                'parameter' => $parameter,
+                'value' => $value
+            ];
+            $this->addBinding([$parameter => $value]);
+        }
+        $sql = $this->grammar->compileUpdate($this, $valuesWithParams);
+
+        $query = $this;
+        return $this->connection->runTransaction(function (Transaction $t) use ($sql, $query) {
+            $t->executeUpdate($sql, [
+                'parameters' => $query->getBindings()
+            ]);
+            return $t->commit();
+        });
+    }
+
     public function delete($id = null): Timestamp
     {
         if (!is_null($id)) {
@@ -786,6 +808,11 @@ class Builder implements Operator, Aggregator, Fetchable
 
     private function getParameterKey(): string
     {
-        return '@param' . ParamCounter::getKey();
+        return '@param' . ParamCounter::getKeyParam();
+    }
+
+    private function getValueKey(): string
+    {
+        return '@value' . ParamCounter::getKeyValue();
     }
 }

@@ -11,6 +11,7 @@ use MgCosta\Spanner\Builder\JoinClause;
 class SpannerGrammar implements Grammatical
 {
     protected $tablePrefix = '';
+
     protected $selectComponents = [
         'aggregate',
         'columns',
@@ -37,6 +38,34 @@ class SpannerGrammar implements Grammatical
         $query->columns = $original;
 
         return $sql;
+    }
+
+    public function compileUpdate(Builder $query, array $values): string
+    {
+        $table = $this->wrapTable($query->from);
+
+        $columns = $this->compileUpdateColumns($query, $values);
+
+        $where = $this->compileWheres($query);
+
+        return trim(
+            isset($query->joins)
+                ? $this->compileUpdateWithJoins($query, $table, $columns, $where)
+                : $this->compileUpdateWithoutJoins($query, $table, $columns, $where)
+        );
+    }
+
+    public function compileDelete(Builder $query): string
+    {
+        $table = $this->wrapTable($query->from);
+
+        $where = $this->compileWheres($query);
+
+        return trim(
+            isset($query->joins)
+                ? $this->compileDeleteWithJoins($query, $table, $where)
+                : $this->compileDeleteWithoutJoins($query, $table, $where)
+        );
     }
 
     protected function compileComponents(Builder $query): array
@@ -156,17 +185,23 @@ class SpannerGrammar implements Grammatical
         return $having['boolean'] . ' ' . $column . ' ' . $having['operator'] . ' ' . $parameter;
     }
 
-    public function compileDelete(Builder $query): string
+    protected function compileUpdateColumns(Builder $query, array $values): string
     {
-        $table = $this->wrapTable($query->from);
+        return collect($values)->map(function ($value, $key) {
+            return $this->wrap($key) . ' = ' . $this->parameter($value);
+        })->implode(', ');
+    }
 
-        $where = $this->compileWheres($query);
+    protected function compileUpdateWithoutJoins(Builder $query, $table, $columns, $where): string
+    {
+        return "update {$table} set {$columns} {$where}";
+    }
 
-        return trim(
-            isset($query->joins)
-                ? $this->compileDeleteWithJoins($query, $table, $where)
-                : $this->compileDeleteWithoutJoins($query, $table, $where)
-        );
+    protected function compileUpdateWithJoins(Builder $query, $table, $columns, $where): string
+    {
+        $joins = $this->compileJoins($query, $query->joins);
+
+        return "update {$table} {$joins} set {$columns} {$where}";
     }
 
     protected function compileDeleteWithoutJoins(Builder $query, $table, $where): string

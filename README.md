@@ -50,6 +50,21 @@ $user = User::find($id);
 
 ```
 
+**Updating/Deleting using the Query Builder**
+
+```PHP
+use MgCosta\Spanner\Model\Model;
+
+class User extends Model {}
+
+// deleting
+User::where('id', 1)->delete();
+
+// updating
+$status = User::where('id', 5)->update(['name' => 'Richard', 'age' => 30]);
+
+```
+
 **Saving a model**
 
 ```PHP
@@ -59,6 +74,8 @@ class User extends Model {
 
     protected $primaryKey = 'UserId';
     
+    // available strategies [uuid4, increment] 
+    // increment is not recommend by cloud spanner
     protected $keyStrategy = 'uuid4';
     
     public $name;

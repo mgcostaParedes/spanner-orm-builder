@@ -1,8 +1,8 @@
 {
   "name": "mgcosta/spanner-orm-builder",
   "type": "library",
-  "description": "Google Spanner ORM Builder",
-  "version": "0.0.1",
+  "description": "Google Spanner ORM With Query Builder",
+  "version": "0.0.2",
   "license": "MIT",
   "authors": [
     {

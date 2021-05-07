@@ -5,6 +5,7 @@ services:
     container_name: spanner-orm-builder
     environment:
       ENVIRONMENT: "development"
+      XDEBUG_MODE: "coverage"
     volumes:
       - $PWD:/var/www/html:delegated
     networks:

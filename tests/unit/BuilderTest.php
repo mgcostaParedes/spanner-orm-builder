@@ -707,6 +707,26 @@ class BuilderTest extends Unit
         $this->assertEquals($timestamp, $result);
     }
 
+    public function testShouldReturnATimestampWhenCallingUpdatedMethodProperly()
+    {
+        $date = new DateTimeImmutable(date('Y-m-d'));
+        $timestamp = new Timestamp($date);
+        $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+
+        $this->database->shouldReceive('runTransaction')->once()->with(
+            m::on(function(Closure $transaction) use($timestamp) {
+                $mockTransaction = m::mock(Transaction::class);
+                $mockTransaction->shouldReceive('executeUpdate')->andReturn(1)->once();
+                $mockTransaction->shouldReceive('commit')->andReturn($timestamp)->once();
+                $this->assertSame($timestamp, $transaction($mockTransaction));
+                return true;
+            })
+        )->andReturn($timestamp);
+
+        $result = $this->builder->where('id', 1)->update(['age' => 30]);
+        $this->assertEquals($timestamp, $result);
+    }
+
     public function testShouldReturnAnExpressionWhenCallingRawMethod()
     {
         $result = $this->builder->raw('select count(*) from testA');

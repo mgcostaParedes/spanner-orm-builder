@@ -6,16 +6,24 @@ namespace MgCosta\Spanner\Builder;
 
 class ParamCounter
 {
-    protected static $counter = 0;
+    protected static $counterParams = 0;
+    protected static $counterValues = 0;
 
-    public static function getKey(): int
+    public static function getKeyParam(): int
     {
-        static::$counter++;
-        return static::$counter;
+        static::$counterParams++;
+        return static::$counterParams;
+    }
+
+    public static function getKeyValue(): int
+    {
+        static::$counterValues++;
+        return static::$counterValues;
     }
 
     public static function flushCounter(): void
     {
-        static::$counter = 0;
+        static::$counterParams = 0;
+        static::$counterValues = 0;
     }
 }

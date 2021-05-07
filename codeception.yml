@@ -11,5 +11,3 @@ coverage:
   enabled: true
   include:
     - src/*
-  exclude:
-    - src/Spanner/Config/analytics-auth-config.json
