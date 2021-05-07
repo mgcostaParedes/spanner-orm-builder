@@ -25,10 +25,8 @@ jobs:
       - name: Install Composer
         run: composer install
 
-      - name: PHPCS check
-        uses: chekalsky/phpcs-action@v1
-        with:
-          enable_warnings: true
+      - name: Detect coding standard violations
+        run: vendor/bin/phpcs -sv --extensions=php --standard=PSR12 --ignore=vendor,tests,c3.php .
 
       - name: Execute tests
         run: vendor/bin/codecept run --coverage --coverage-text --coverage-xml
