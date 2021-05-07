@@ -1,9 +1,20 @@
-## Spanner ORM Builder
+## Spanner ORM Builder For PHP
 
+[![License](https://poser.pugx.org/mgcosta/spanner-orm-builder/license)](//packagist.org/packages/mgcosta/spanner-orm-builder)
 [![Build Status](https://travis-ci.com/mgcostaParedes/spanner-orm-builder.svg?branch=main)](https://travis-ci.com/mgcostaParedes/spanner-orm-builder)
 [![codecov](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder/branch/main/graph/badge.svg?token=OEUY7ZDTOP)](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder)
+[![Total Downloads](https://poser.pugx.org/mgcosta/spanner-orm-builder/downloads)](//packagist.org/packages/mgcosta/spanner-orm-builder)
+
 
 The Spanner ORM Builder is a database toolkit to PHP, providing an expressive query builder, ActiveRecord style ORM, it can serve as a database layer for your PHP app if you intend to work with **Google Cloud Spanner**.
+
+## Install
+
+Via Composer
+
+``` bash
+$ composer require mgcosta/spanner-orm-builder
+```
 
 ### Usage Instructions
 
