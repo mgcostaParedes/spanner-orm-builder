@@ -16,6 +16,7 @@ abstract class Model
 {
     use ForwardCall;
     use ModelAttributes;
+
     /**
      * The connection resolver instance.
      *
