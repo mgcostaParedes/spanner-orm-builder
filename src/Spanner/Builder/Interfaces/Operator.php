@@ -32,6 +32,9 @@ interface Operator
     public function orWhereExists(Closure $callback, $not = false): Builder;
     public function orWhereNotExists(Closure $callback): Builder;
 
+    public function offset($value): Builder;
+    public function limit($value): Builder;
+
     public function joinWhere($table, $first, $operator, $second, $type = 'inner'): Builder;
     public function rightJoin($table, $first, $operator = null, $second = null): Builder;
     public function leftJoin($table, $first, $operator = null, $second = null): Builder;

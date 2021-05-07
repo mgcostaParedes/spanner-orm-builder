@@ -396,6 +396,61 @@ class GrammarTest extends Unit
         );
     }
 
+    public function testShouldCompileUpdateSuccessfullyWhenPassBuilderWithUpdateProperties()
+    {
+        $this->builder->from = 'test';
+        $this->builder->wheres[] = [
+            'type' => 'Basic',
+            'column' => 'id',
+            'operator' => '=',
+            'value' => 1,
+            'boolean' => 'and',
+            'parameter' => '@param1'
+        ];
+
+        $values = [
+            'age' => ['parameter' => '@value1', 'value' => 30]
+        ];
+
+        $this->assertEquals(
+            'update test set age = @value1 where id = @param1',
+            $this->grammar->compileUpdate($this->builder, $values)
+        );
+    }
+
+    public function testShouldCompileUpdateSuccessfullyWhenPassBuilderWithJoinDeleteProperties()
+    {
+        $joinClause = m::mock(JoinClause::class);
+        $joinClause->type = 'inner';
+        $joinClause->table = 'TestB';
+        $joinClause->wheres[] = [
+            'type' => 'Column',
+            'first' => 'TestA.id',
+            'operator' => '=',
+            'second' => 'TestB.id',
+            'boolean' => 'and'
+        ];
+        $this->builder->from = 'TestA';
+        $this->builder->joins[0] = $joinClause;
+        $this->builder->wheres[] = [
+            'type' => 'Basic',
+            'column' => 'id',
+            'operator' => '=',
+            'value' => 1,
+            'boolean' => 'and',
+            'parameter' => '@param1'
+        ];
+
+        $values = [
+            'age' => ['parameter' => '@value1', 'value' => 30]
+        ];
+
+        $this->assertEquals(
+            'update TestA inner join TestB on TestA.id = TestB.id set age = @value1 where id = @param1',
+            $this->grammar->compileUpdate($this->builder, $values)
+        );
+    }
+
     public function testShouldReturnAnExpressionValueWhenGettingParameterWithExpression()
     {
         $this->builder->from = 'TestA';
