@@ -1,0 +1,58 @@
+{
+  "name": "mgcosta/spanner-orm-builder",
+  "type": "library",
+  "description": "Google Spanner ORM Builder",
+  "version": "0.0.1",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Miguel Costa",
+      "email": "miguelcostaparedes@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.3 || ^8.0",
+    "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-grpc": "*",
+    "grpc/grpc": "^1.36",
+    "google/cloud-spanner": "^1.36",
+    "ramsey/uuid": "^4.1.1",
+    "illuminate/collections": "^8.37.0"
+  },
+  "require-dev": {
+    "ext-xdebug": "*",
+    "mockery/mockery": "^1.4",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "phpunit/phpunit": "^9",
+    "sebastian/phpcpd": "^5.0",
+    "squizlabs/php_codesniffer": "^3.5",
+    "codeception/c3": "^2.4",
+    "codeception/codeception": "^4.1",
+    "codeception/module-asserts": "^1.2"
+  },
+  "config": {
+    "platform": {
+      "php": "7.3"
+    },
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "MgCosta\\Spanner\\": "src/Spanner"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "stable",
+  "scripts": {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+    "post-update-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+    "phpcpd": "phpcpd -vvv --min-tokens=40 src",
+    "phpcs": "phpcs -p src --standard=PSR12 --standard=PHPCompatibility",
+    "phpcs-fix": "phpcbf --standard=PSR12"
+  }
+}

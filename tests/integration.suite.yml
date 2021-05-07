@@ -1,0 +1,6 @@
+actor: IntegrationTester
+
+modules:
+  step_decorators: ~
+  enabled:
+    - Asserts

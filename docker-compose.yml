@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  app:
+    build: ./
+    container_name: spanner-orm-builder
+    environment:
+      ENVIRONMENT: "development"
+    volumes:
+      - $PWD:/var/www/html:delegated
+    networks:
+      - default
