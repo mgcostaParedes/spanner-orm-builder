@@ -17,5 +17,5 @@ before_script:
 script:
   - php vendor/bin/codecept run --coverage --coverage-text --coverage-xml
 
-after_script:
+after_success:
   - bash <(curl -s https://codecov.io/bash)
