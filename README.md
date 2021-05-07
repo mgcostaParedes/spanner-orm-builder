@@ -1,7 +1,7 @@
 ## Spanner ORM Builder For PHP
 
 [![License](https://poser.pugx.org/mgcosta/spanner-orm-builder/license)](//packagist.org/packages/mgcosta/spanner-orm-builder)
-[![Build Status](https://travis-ci.com/mgcostaParedes/spanner-orm-builder.svg?branch=main)](https://travis-ci.com/mgcostaParedes/spanner-orm-builder)
+[![Actions Status](https://github.com/mgcostaParedes/spanner-orm-builder/workflows/CI/badge.svg)](https://github.com/mgcostaParedes/spanner-orm-builder/actions)
 [![codecov](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder/branch/main/graph/badge.svg?token=OEUY7ZDTOP)](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder)
 [![Total Downloads](https://poser.pugx.org/mgcosta/spanner-orm-builder/downloads)](//packagist.org/packages/mgcosta/spanner-orm-builder)
 
