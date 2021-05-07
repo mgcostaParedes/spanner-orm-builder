@@ -1,9 +1,20 @@
-## Spanner ORM Builder
+## Spanner ORM Builder For PHP
 
+[![License](https://poser.pugx.org/mgcosta/spanner-orm-builder/license)](//packagist.org/packages/mgcosta/spanner-orm-builder)
 [![Build Status](https://travis-ci.com/mgcostaParedes/spanner-orm-builder.svg?branch=main)](https://travis-ci.com/mgcostaParedes/spanner-orm-builder)
 [![codecov](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder/branch/main/graph/badge.svg?token=OEUY7ZDTOP)](https://codecov.io/gh/mgcostaParedes/spanner-orm-builder)
+[![Total Downloads](https://poser.pugx.org/mgcosta/spanner-orm-builder/downloads)](//packagist.org/packages/mgcosta/spanner-orm-builder)
+
 
 The Spanner ORM Builder is a database toolkit to PHP, providing an expressive query builder, ActiveRecord style ORM, it can serve as a database layer for your PHP app if you intend to work with **Google Cloud Spanner**.
+
+## Install
+
+Via Composer
+
+``` bash
+$ composer require mgcosta/spanner-orm-builder
+```
 
 ### Usage Instructions
 
@@ -28,10 +39,32 @@ Once the Manager instance has been registered, we may use it like:
 **Using The Query Builder**
 
 ```PHP
+use MgCosta\Spanner\Model\Model;
 
-class User extends \MgCosta\Spanner\Model\Model {}
+class User extends Model {}
 
 $users = User::where('age', '>', 30)->get();
+
+```
+
+**Saving a model **
+
+```PHP
+use MgCosta\Spanner\Model\Model;
+
+class User extends Model {
+    protected $primaryKey = 'UserId';
+    
+    public $name;
+    public $age;
+    public $email;
+}
+
+$user = new User();
+$user->name = 'Miguel';
+$user->age = 28;
+$user->email = 'email@gmail.com';
+$user->save();
 
 ```
 
