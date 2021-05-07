@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace MgCosta\Spanner\Manager;
 
 use MgCosta\Spanner\Model\Model;
