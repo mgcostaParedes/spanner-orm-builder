@@ -91,7 +91,7 @@ abstract class Model
 
     public static function query(): Builder
     {
-        return (new static)->newQuery();
+        return (new static())->newQuery();
     }
 
     public static function all($columns = ['*']): Collection

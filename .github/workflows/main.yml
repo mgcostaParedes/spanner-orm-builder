@@ -25,6 +25,11 @@ jobs:
       - name: Install Composer
         run: composer install
 
+      - name: PHPCS check
+        uses: chekalsky/phpcs-action@v1
+        with:
+          enable_warnings: true
+
       - name: Execute tests
         run: vendor/bin/codecept run --coverage --coverage-text --coverage-xml
 
