@@ -93,10 +93,18 @@ $user->save();
 
 The implementation of the query builder is inspired on Laravel Query Builder, to get more documentation follow the [link](https://laravel.com/docs/master/queries).
 
+## Roadmap
+
+You can get more details of the plans for this early version on the following [link](https://github.com/mgcostaParedes/spanner-orm-builder/projects/1).
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+
 ## Credits
 
 - [Miguel Costa][https://github.com/mgcostaParedes]
-- [All Contributors][link-contributors]
 
 ## License
 
