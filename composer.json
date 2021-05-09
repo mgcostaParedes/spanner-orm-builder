@@ -2,7 +2,7 @@
   "name": "mgcosta/spanner-orm-builder",
   "type": "library",
   "description": "Google Spanner ORM With Query Builder",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "license": "MIT",
   "authors": [
     {

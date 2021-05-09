@@ -10,16 +10,21 @@ use MgCosta\Spanner\Model\Strategies\StrategyFactory;
 
 class Manager implements Manageable
 {
-    protected $connection;
+    protected static $connection;
 
     public function __construct(Database $connection)
     {
-        $this->connection = $connection;
+        static::$connection = $connection;
     }
 
     public function boot()
     {
-        Model::setConnectionDatabase($this->connection);
+        Model::setConnectionDatabase(static::$connection);
         Model::setStrategyFactory(new StrategyFactory());
+    }
+
+    public static function getConnection(): Database
+    {
+        return static::$connection;
     }
 }

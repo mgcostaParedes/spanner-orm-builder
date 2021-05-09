@@ -26,6 +26,7 @@ use MgCosta\Spanner\Manager;
 use Google\Cloud\Spanner\Database;
 
 // $database = your database instance for google cloud spanner;
+// instance of Google\Cloud\Spanner\Database;
 
 $manager = new Manager($database);
 $manager->boot();
@@ -90,6 +91,18 @@ $user->email = 'email@gmail.com';
 $user->save();
 
 ```
+
+**Using the query builder without Model Class**
+```PHP
+use MgCosta\Spanner\Facade\SpannerDB;
+
+(new SpannerDB())->table('users')->whereIn('id', [1, 2, 3])->get();
+
+// you can also provide a custom spanner Database Instance
+// $database = instance of Google\Cloud\Spanner\Database;
+(new SpannerDB($database))->table('users')->where('id', 1)->first();
+```
+
 
 The implementation of the query builder is inspired on Laravel Query Builder, to get more documentation follow the [link](https://laravel.com/docs/master/queries).
 
