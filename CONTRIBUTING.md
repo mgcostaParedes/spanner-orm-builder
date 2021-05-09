@@ -2,7 +2,7 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via Pull Requests on [Github](https://github.com/killmi/Office365-API-Oauth2-Laravel ).
+We accept contributions via Pull Requests on [Github](https://github.com/mgcostaParedes/spanner-orm-builder).
 
 
 ## Pull Requests
