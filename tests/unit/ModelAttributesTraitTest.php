@@ -31,4 +31,18 @@ class ModelAttributesTraitTest extends Unit
         ];
         $this->assertEquals($expectedArray, $this->trait->getAttributes());
     }
+
+    public function testShouldAssignClassPropertiesWhenCallingSetRawAttributesWithinAValidArray()
+    {
+        $this->trait->setRawAttributes([
+            'id' => 1,
+            'firstName' => 'Michael',
+            'lastName' => 'Brandon',
+            'age' => 30
+        ]);
+        $this->assertEquals(1, $this->trait->id);
+        $this->assertEquals('Michael', $this->trait->firstName);
+        $this->assertEquals('Brandon', $this->trait->lastName);
+        $this->assertEquals(30, $this->trait->age);
+    }
 }

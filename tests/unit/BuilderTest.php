@@ -6,6 +6,7 @@ use DateTimeImmutable;
 use Google\Cloud\Spanner\Result;
 use Google\Cloud\Spanner\Timestamp;
 use Google\Cloud\Spanner\Transaction;
+use Illuminate\Support\Collection;
 use MgCosta\Spanner\Builder\Builder;
 use MgCosta\Spanner\Builder\ParamCounter;
 use MgCosta\Spanner\Builder\Expression;
@@ -613,6 +614,8 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn(new ArrayIterator([]));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection([]));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->where('age', '>', 35)->count();
         $this->assertEquals(null, $result);
@@ -623,6 +626,9 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn(new ArrayIterator([['aggregate' => 39]]));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newFromBuilder')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection($mockResult));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->where('age', '>', 35)->count();
         $this->assertEquals(39, $result);
@@ -633,6 +639,9 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn(new ArrayIterator([['aggregate' => 200]]));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newFromBuilder')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection($mockResult));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->where('age', '>', 35)->max('age');
         $this->assertEquals(200, $result);
@@ -643,6 +652,9 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn(new ArrayIterator([['aggregate' => 20]]));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newFromBuilder')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection($mockResult));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->where('age', '>', 35)->min('age');
         $this->assertEquals(20, $result);
@@ -653,6 +665,9 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn(new ArrayIterator([['aggregate' => 333]]));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newFromBuilder')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection($mockResult));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->where('age', '>', 35)->sum('age');
         $this->assertEquals(333, $result);
@@ -663,6 +678,9 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn(new ArrayIterator([['aggregate' => 333.67]]));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newFromBuilder')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection($mockResult));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->where('age', '>', 35)->avg('age');
         $this->assertEquals(333.67, $result);
@@ -673,6 +691,9 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn(new ArrayIterator([['columnA' => 'A', 'columnB' => 'B']]));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newFromBuilder')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection($mockResult));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->where('age', '>', 35)->value('columnA');
         $this->assertEquals('A', $result);
@@ -683,6 +704,9 @@ class BuilderTest extends Unit
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn($this->getRandomData(55));
         $this->mockedModel->shouldReceive('getPrimaryKey')->andReturn('DummyID');
+        $this->mockedModel->shouldReceive('newInstance')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newFromBuilder')->andReturnSelf();
+        $this->mockedModel->shouldReceive('newCollection')->andReturn(new Collection($mockResult));
         $this->database->shouldReceive('execute')->andReturn($mockResult);
         $result = $this->builder->find('55');
         $this->assertIsArray($result);

@@ -32,7 +32,7 @@ abstract class Model
 
     protected $keyStrategy = 'uuid4';
 
-    public $strategies = ['uuid4', 'increment', false];
+    protected $strategies = ['uuid4', 'increment', false];
 
     public function getTable(): string
     {
@@ -54,6 +54,11 @@ abstract class Model
     public function getConnection(): Database
     {
         return static::$connection;
+    }
+
+    public function setConnection(Database $connection): void
+    {
+        static::$connection = $connection;
     }
 
     public static function setConnectionDatabase(Database $connection)
@@ -116,6 +121,28 @@ abstract class Model
 
         $this->getConnection()->insertOrUpdate($this->getTable(), $attributes);
         return true;
+    }
+
+    public function newCollection(array $models = []): Collection
+    {
+        return new Collection($models);
+    }
+
+    public function newInstance(): self
+    {
+        $model = new static();
+        $model->setTable($this->getTable());
+
+        return $model;
+    }
+
+    public function newFromBuilder($attributes = [], $connection = null): self
+    {
+        $model = $this->newInstance();
+        $model->setRawAttributes((array) $attributes);
+        $model->setConnection($connection ?: $this->getConnection());
+
+        return $model;
     }
 
     private function isValidStrategy(): bool

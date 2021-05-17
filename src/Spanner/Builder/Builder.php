@@ -68,16 +68,46 @@ class Builder implements Operator, Aggregator, Fetchable
      */
     public $wheres = [];
 
+    /**
+     * The group constraints which query is targeting
+     *
+     * @var array
+     */
     public $groups;
 
+    /**
+     * The having constraints which query is targeting
+     *
+     * @var array
+     */
     public $havings;
 
+    /**
+     * The orders constraints which query is targeting
+     *
+     * @var array
+     */
     public $orders;
 
+    /**
+     * The maximum number of results to return.
+     *
+     * @var int
+     */
     public $limit;
 
+    /**
+     * The number of results to skip.
+     *
+     * @var int
+     */
     public $offset;
 
+    /**
+     * The query union statements.
+     *
+     * @var array
+     */
     public $unions;
 
     public $bindings = [
@@ -618,9 +648,16 @@ class Builder implements Operator, Aggregator, Fetchable
 
     public function get(array $columns = ['*']): Collection
     {
-        return collect($this->onceWithColumns(Arr::wrap($columns), function () {
+        $result = collect($this->onceWithColumns(Arr::wrap($columns), function () {
             return $this->runSelect();
         }));
+
+        if ($this->model) {
+            $models = $this->hydrate($result->toArray())->all();
+            return $this->getModel()->newCollection($models);
+        }
+
+        return $result;
     }
 
     public function find($id, $columns = ['*']): array
@@ -687,6 +724,15 @@ class Builder implements Operator, Aggregator, Fetchable
     public function toSql(): string
     {
         return $this->grammar->compile($this);
+    }
+
+    protected function hydrate(array $items): Collection
+    {
+        $instance = $this->model->newInstance();
+
+        return $instance->newCollection(array_map(function ($item) use ($instance) {
+            return $instance->newFromBuilder($item);
+        }, $items));
     }
 
     protected function invalidOperatorOrValue($operator, $value): bool
