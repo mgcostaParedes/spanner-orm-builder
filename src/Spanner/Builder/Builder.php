@@ -173,9 +173,27 @@ class Builder implements Operator, Aggregator, Fetchable
         return $this->model;
     }
 
-    public function from(string $table, string $as = null): self
+    public function from($table, string $as = null): self
     {
+        if ($this->isQueryable($table)) {
+            return $this->fromSub($table, $as);
+        }
+
         $this->from = $as ? "{$table} as {$as}" : $table;
+        return $this;
+    }
+
+    public function fromSub($query, $as): self
+    {
+        [$query, $bindings] = $this->createSub($query);
+        return $this->fromRaw('(' . $query . ') as ' . $this->grammar->wrapTable($as), $bindings);
+    }
+
+    public function fromRaw($expression, $bindings = []): self
+    {
+        $this->from = new Expression($expression);
+
+        $this->addBinding($bindings, 'from');
         return $this;
     }
 

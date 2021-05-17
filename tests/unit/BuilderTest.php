@@ -46,6 +46,15 @@ class BuilderTest extends Unit
         $this->assertEquals('dummymodel', $this->builder->from);
     }
 
+    public function testShouldAssignProperBindingsWhenCallingFromWithSubQuery()
+    {
+        $subQuery = new Builder(m::mock(Database::class));
+        $subQuery->from('persons')->where('age', '>=', 35);
+        $this->builder->from($subQuery, 'table');
+
+        $this->assertEquals(['param1' => 35], $this->builder->bindings['from']);
+        $this->assertEquals('(select * from persons where age >= @param1) as table', $this->builder->from);
+    }
 
     public function testShouldThrowAnInvalidArgumentExceptionModelWhenCallingAddBindingWithInvalidType()
     {

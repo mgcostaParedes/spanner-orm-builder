@@ -73,12 +73,14 @@ use MgCosta\Spanner\Model\Model;
 
 class User extends Model {
 
-    protected $primaryKey = 'UserId';
+    protected $primaryKey = 'userId';
     
     // available strategies [uuid4, increment] 
     // increment is not recommend by cloud spanner
     protected $keyStrategy = 'uuid4';
     
+    // we must define the properties which corresponds to the columns of the table as public
+    public $userId;
     public $name;
     public $age;
     public $email;
