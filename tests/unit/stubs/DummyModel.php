@@ -7,4 +7,6 @@ use MgCosta\Spanner\Model\Model;
 class DummyModel extends Model
 {
     protected $keyStrategy = 'increment';
+
+    public $id;
 }

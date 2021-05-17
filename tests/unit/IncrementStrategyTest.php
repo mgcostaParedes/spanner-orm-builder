@@ -9,6 +9,7 @@ use MgCosta\Spanner\Model\Strategies\IncrementStrategy;
 use Codeception\Test\Unit;
 use Mockery as m;
 use ArrayIterator;
+use Tests\unit\stubs\DummyModel;
 
 class IncrementStrategyTest extends Unit
 {
@@ -18,7 +19,7 @@ class IncrementStrategyTest extends Unit
 
     public function setUp(): void
     {
-        $this->model = $this->getMockForAbstractClass(Model::class);
+        $this->model = new DummyModel();
         $this->connection = m::mock(Database::class);
         Model::setConnectionDatabase($this->connection);
         $this->strategy = new IncrementStrategy();
@@ -43,9 +44,7 @@ class IncrementStrategyTest extends Unit
 
     public function testShouldGetTheStartIncrementValueAs1WhenCallingGenerateKeyAndFetchAnEmptyResultFromDatabase()
     {
-        $data = new ArrayIterator([
-            []
-        ]);
+        $data = new ArrayIterator([]);
         $mockResult = m::mock(Result::class);
         $mockResult->shouldReceive('getIterator')->andReturn($data);
 

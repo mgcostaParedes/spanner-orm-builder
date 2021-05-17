@@ -13,7 +13,7 @@ class IncrementStrategy implements StrategicalGenerator
         // find latest result on database
         $lastResult = $model->newQuery()->orderBy($model->getPrimaryKey(), 'desc')->first();
         if (!empty($lastResult)) {
-            return $lastResult[$model->getPrimaryKey()] + 1;
+            return $lastResult->{$model->getPrimaryKey()} + 1;
         }
         return 1;
     }

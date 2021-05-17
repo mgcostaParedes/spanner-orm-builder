@@ -23,4 +23,18 @@ trait ModelAttributes
 
         return $attributes;
     }
+
+    public function setRawAttributes(array $attributes): void
+    {
+        $reflect = new ReflectionObject($this);
+        $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
+        foreach ($attributes as $key => $attribute) {
+            $exists = array_filter($props, function ($prop) use ($key) {
+                return $prop->name == $key && $prop->class == get_called_class();
+            });
+            if (!empty($exists)) {
+                $this->{$key} = $attribute;
+            }
+        }
+    }
 }
