@@ -316,7 +316,7 @@ class SpannerGrammar implements Grammatical
         }));
     }
 
-    protected function wrapTable($table)
+    public function wrapTable($table)
     {
         if (! $this->isExpression($table)) {
             return $this->wrap($this->tablePrefix . $table, true);
@@ -325,7 +325,7 @@ class SpannerGrammar implements Grammatical
         return $table->getValue($table);
     }
 
-    private function wrap($value, $prefixAlias = false)
+    protected function wrap($value, $prefixAlias = false)
     {
         if ($this->isExpression($value)) {
             return $value->getValue($value);
@@ -339,7 +339,7 @@ class SpannerGrammar implements Grammatical
         return $this->wrapSegments(explode('.', $value));
     }
 
-    private function wrapAliasedValue($value, $prefixAlias = false): string
+    protected function wrapAliasedValue($value, $prefixAlias = false): string
     {
         $segments = preg_split('/\s+as\s+/i', $value);
 
@@ -350,7 +350,7 @@ class SpannerGrammar implements Grammatical
         return $this->wrap($segments[0]) . ' as ' . $this->wrapValue($segments[1]);
     }
 
-    private function wrapValue($value): string
+    protected function wrapValue($value): string
     {
         if ($value !== '*') {
             return str_replace('"', '""', $value);
@@ -359,18 +359,18 @@ class SpannerGrammar implements Grammatical
         return $value;
     }
 
-    private function isExpression($value): bool
-    {
-        return $value instanceof Expression;
-    }
-
-    private function wrapSegments($segments): string
+    protected function wrapSegments($segments): string
     {
         return collect($segments)->map(function ($segment, $key) use ($segments) {
             return $key == 0 && count($segments) > 1
                 ? $this->wrapTable($segment)
                 : $this->wrapValue($segment);
         })->implode('.');
+    }
+
+    private function isExpression($value): bool
+    {
+        return $value instanceof Expression;
     }
 
     private function columnize(array $columns): string

@@ -7,6 +7,10 @@ use MgCosta\Spanner\Builder\Builder;
 
 interface Operator
 {
+    public function from($table, string $as = null): Builder;
+    public function fromSub($query, $as): Builder;
+    public function fromRaw($expression, $bindings = []): Builder;
+
     public function select($columns = ['*']): Builder;
     public function selectSub($query, $as): Builder;
     public function selectRaw($expression, array $bindings = []): Builder;

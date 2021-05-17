@@ -22,8 +22,8 @@ class SpannerDB
         $this->connection = $connection ?? Manager::getConnection();
     }
 
-    public function table(string $name): Builder
+    public function table($name, $as = null): Builder
     {
-        return (new Builder($this->connection))->from($name);
+        return (new Builder($this->connection))->from($name, $as);
     }
 }
