@@ -20,6 +20,7 @@ interface Operator
 
     public function where($column, $operator = null, $value = null, $boolean = 'and'): Builder;
     public function whereColumn($first, $operator = null, $second = null, $boolean = 'and'): Builder;
+    public function whereBetween($column, iterable $values, $boolean = 'and', $not = false): Builder;
     public function whereNested(Closure $callback, $boolean = 'and'): Builder;
     public function addNestedWhereQuery($query, $boolean = 'and'): Builder;
     public function orWhere($column, $operator = null, $value = null): Builder;
@@ -46,4 +47,6 @@ interface Operator
 
     public function orderBy($column, $direction = 'asc'): Builder;
     public function orderByDesc($column): Builder;
+
+    public function groupBy(array ...$groups): Builder;
 }
