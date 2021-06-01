@@ -68,6 +68,15 @@ class SpannerGrammar implements Grammatical
         );
     }
 
+    public function wrapTable($table)
+    {
+        if (!$this->isExpression($table)) {
+            return $this->wrap($this->tablePrefix . $table, true);
+        }
+
+        return $table->getValue($table);
+    }
+
     protected function compileComponents(Builder $query): array
     {
         $sql = [];
@@ -239,7 +248,7 @@ class SpannerGrammar implements Grammatical
         return $conjunction . ' ' . $this->removeLeadingBoolean(implode(' ', $sql));
     }
 
-    private function whereBasic(Builder $query, array $where): string
+    protected function whereBasic(Builder $query, array $where): string
     {
         $value = $this->parameter($where);
 
@@ -316,21 +325,11 @@ class SpannerGrammar implements Grammatical
         }));
     }
 
-    public function wrapTable($table)
-    {
-        if (! $this->isExpression($table)) {
-            return $this->wrap($this->tablePrefix . $table, true);
-        }
-
-        return $table->getValue($table);
-    }
-
     protected function wrap($value, $prefixAlias = false)
     {
         if ($this->isExpression($value)) {
             return $value->getValue($value);
         }
-
 
         if (stripos($value, ' as ') !== false) {
             return $this->wrapAliasedValue($value, $prefixAlias);

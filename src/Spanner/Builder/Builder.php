@@ -141,7 +141,7 @@ class Builder implements Operator, Aggregator, Fetchable
         return Arr::collapse($this->bindings);
     }
 
-    public function getRawBindings()
+    public function getRawBindings(): array
     {
         return $this->bindings;
     }
@@ -506,7 +506,7 @@ class Builder implements Operator, Aggregator, Fetchable
     public function groupBy(...$groups): self
     {
         foreach ($groups as $group) {
-            $this->groups = array_merge((array) $this->groups, Arr::wrap($group));
+            $this->groups = array_merge((array)$this->groups, Arr::wrap($group));
         }
 
         return $this;
@@ -556,6 +556,7 @@ class Builder implements Operator, Aggregator, Fetchable
             }
         });
     }
+
     public function cloneWithoutBindings(array $except)
     {
         return $this->tap($this->clone(), function ($clone) use ($except) {
